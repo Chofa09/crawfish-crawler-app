@@ -1,20 +1,20 @@
 package main
 
 import (
-	"net/http"
+	"log"
 
 	"github.com/Chofa09/crawfish-backend/internal/db"
-	"github.com/gin-gonic/gin"
+	"github.com/Chofa09/crawfish-backend/server"
 )
 
 func main() {
 
-	db.InitDB()
-	r := gin.Default()
+	database := db.InitDB()
 
-	r.GET("/health", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"status": "ok"})
-	})
+	defer database.Close()
 
-	r.Run(":8080")
+	router := server.SetupRouter(database)
+
+	log.Printf("🚀 Server running on port 8080")
+	router.Run(":8080")
 }

@@ -12,7 +12,7 @@ import (
 
 var DB *sql.DB
 
-func InitDB() {
+func InitDB() *sql.DB {
 	// Load env from root-level .env
 	err := godotenv.Load("../.env")
 	if err != nil {
@@ -38,5 +38,5 @@ func InitDB() {
 	}
 
 	log.Println("✅ Connected to MySQL")
-	DB = db
+	return db
 }
