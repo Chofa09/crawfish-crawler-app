@@ -21,7 +21,7 @@ func NewURLHandler(db *sql.DB) *URLHandler {
 func (h *URLHandler) GetAll(c *gin.Context) {
 	urls, err := models.GetAllURLs(h.DB)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch URLs"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, urls)
